@@ -22,9 +22,8 @@ class openlayers_behavior_attribution extends openlayers_behavior {
     return array('OpenLayers.Control.Attribution');
   }
 
-  function options_form($defaults) {
-    return array(
-    );
+  function options_form($defaults = array()) {
+    return array();
   }
 
   /**

@@ -6,7 +6,7 @@
  */
 
 /**
- * Layer Switcher Behavior
+ * Layer Switcher Behavior.
  */
 class openlayers_behavior_layerswitcher extends openlayers_behavior {
   /**
@@ -24,7 +24,7 @@ class openlayers_behavior_layerswitcher extends openlayers_behavior {
     return array('OpenLayers.Control.LayerSwitcher');
   }
 
-  function options_form($defaults) {
+  function options_form($defaults = array()) {
     return array(
       'ascending' => array(
         '#type' => 'checkbox',
