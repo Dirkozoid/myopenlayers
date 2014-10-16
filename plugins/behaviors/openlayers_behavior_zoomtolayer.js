@@ -47,6 +47,9 @@ Drupal.openlayers.addBehavior('openlayers_behavior_zoomtolayer', function (data,
    */
   function handle_loadend_once(event) {
     var layer = event.object;
+    if (layer.features.length === 0) {
+      return;
+    }
     layer.events.unregister('loadend', layer, handle_loadend_once);
 
     accumulate_extent(layer);
