@@ -93,12 +93,6 @@ Drupal.behaviors.openlayers = {
 
             // Finally, attach behaviors
             Drupal.attachBehaviors(this);
-
-            // Always load the map when the page has finished loading.
-            // See #2227993 and #2254625
-            $(window).load(function() {
-              openlayers.render(map.id);
-            });
           }
           catch (e) {
             var errorMessage = e.name + ': ' + e.message;
