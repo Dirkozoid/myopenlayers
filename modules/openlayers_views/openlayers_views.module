@@ -121,6 +121,7 @@ function openlayers_views_openlayers_layers() {
         $layer->title = empty($data->display_options['title']) ? $view->name : $data->display_options['title'];
         $layer->title .= ' - ' . $data->display_title;
         $layer->description = $view->description;
+        $layer->data['projection'] = array($data->display_options['style_options']['data_source']['projection']);
         $layer->data['views'] = array('view' => $view->name, 'display' => $display);
         $layers[$layer->name] = $layer;
       }
