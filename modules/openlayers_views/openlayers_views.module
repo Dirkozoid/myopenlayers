@@ -151,11 +151,20 @@ function openlayers_views_openlayers_layers() {
         $layer->title .= ' - ' . $data->display_title;
         $layer->description = $view->description;
 
-        // Determine if we should use a BBOX strategy.
+        /*
+         * Determine if we should use a BBOX strategy.
+         * We check if the arg_id is set to bbox manually or if the
+         * argument is not set which means bbox as that is the default.
+         */
         $useBBOX = FALSE;
         if (isset($data->display_options['arguments']) &&
           isset($data->display_options['arguments']['bbox_argument']) &&
-          $view->data->display_options['arguments']['bbox_argument']['arg_id'] == 'bbox') {
+            ((isset($data->display_options['arguments']['bbox_argument']['default_argument_options']) &&
+            isset($data->display_options['arguments']['bbox_argument']['default_argument_options']['arg_id']) &&
+            $data->display_options['arguments']['bbox_argument']['default_argument_options']['arg_id'] == 'bbox')
+            ||
+          	(!isset($data->display_options['arguments']['bbox_argument']['default_argument_options']['arg_id']))))
+           {
           $useBBOX = TRUE;
         }
 
