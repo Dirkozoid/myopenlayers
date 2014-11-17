@@ -29,13 +29,19 @@ class openlayers_layer_type_wms extends openlayers_layer_type {
    * Options form which generates layers
    */
   function options_form($defaults = array()) {
+    if (isset($this->data['base_url'])) {
+      $base_url = is_array($this->data['base_url']) ? implode("\r\n", $this->data['base_url']) : $this->data['base_url'];
+    }
+    else {
+      $base_url = '';
+    }
+
     return array(
       'base_url' => array(
-        '#type' => 'textfield',
+        '#type' => 'textarea',
         '#title' => t('Base URL'),
-        '#maxlength' => 2083,
-        '#default_value' => isset($this->data['base_url']) ?
-          $this->data['base_url'] : ''
+        '#default_value' => $base_url,
+        '#description' => t('Add one url per line'),
       ),
 
       // TODO: swap terms
@@ -117,6 +123,7 @@ class openlayers_layer_type_wms extends openlayers_layer_type {
    */
   function options_form_validate($form, &$form_state) {
     $form_state['data']['options']['layers'] = explode("\r\n", $form_state['data']['options']['layers']);
+    $form_state['data']['base_url'] = explode("\r\n", $form_state['data']['base_url']);
   }
 
   /**
