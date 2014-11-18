@@ -69,7 +69,14 @@ class openlayers_layer_type_wms extends openlayers_layer_type {
             $this->data['params']['singleTile'] : FALSE,
           '#title' => t('Single tile'),
           '#description' => t('Check to make this layer untiled')
-        )
+        ),
+        'opacity' => array(
+          '#type' => 'textfield',
+          '#default_value' => isset($this->data['params']['opacity']) ?
+            $this->data['params']['opacity'] : 1,
+          '#title' => t('Opacity'),
+          '#description' => t('Opacity of the layer')
+        ),
       ),
       'options' => array(
         'TRANSPARENT' => array(
