@@ -58,7 +58,7 @@ class openlayers_behavior_overviewmap extends openlayers_behavior {
    * Render.
    */
   function render(&$map) {
-    drupal_add_js(drupal_get_path('module', 'openlayers_overviewmap') . '/plugins/behaviors/openlayers_behavior_overviewmap.js');
+    drupal_add_js(drupal_get_path('module', 'openlayers') . '/plugins/behaviors/openlayers_behavior_overviewmap.js');
     return $this->options;
   }
 }
