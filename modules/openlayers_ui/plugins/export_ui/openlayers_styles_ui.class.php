@@ -250,9 +250,9 @@ class openlayers_styles_ui extends ctools_export_ui {
     foreach($views as $vid => $view) {
       if (isset($view->display)) {
         foreach ($view->display as $vdid => $display) {
-          if (isset($display->display_options)) {
-            if (isset($display->display_options['style_plugin'])) {
-              if ($display->display_options['style_plugin'] == 'openlayers_data') {
+          if (!empty($display->display_options['style_plugin'])) {
+            if ($display->display_options['style_plugin'] == 'openlayers_data') {
+              if (!empty($display->display_options['fields'])) {
                 foreach ($display->display_options['fields'] as $fid => $fdata) {
                   $fields[] = t('<code>@fid</code> <em>(from view @viewname and display @displayname.)</em>', array('@fid' => '${' . $fid . '}', '@viewname' => $view->name, '@displayname' => $vdid));
                 }
