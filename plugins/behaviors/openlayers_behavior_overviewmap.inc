@@ -15,13 +15,13 @@ class openlayers_behavior_overviewmap extends openlayers_behavior {
     return array(
       'projection' => array(),
       'maxExtent' => array(),
-      'maximized' => 'true',
+      'maximized' => 'false',
       'minRectSize' => 0,
-      'minRatio' => 16,
-      'maxRatio' => 64,
+      'minRatio' => 8,
+      'maxRatio' => 32,
       'mapOptions' => array(
         'numZoomLevels' => 1,
-        'zoom' => 3,
+        'zoom' => 1,
       ),
       'size' => array(
         'h' => 100,
@@ -49,7 +49,84 @@ class openlayers_behavior_overviewmap extends openlayers_behavior {
       '#default_value' => isset($defaults['projection']) ? $defaults['projection'] : array(),
     );
 
-    // @TODO: add numeric option form elements.
+    $form['size'] = array(
+      '#title' => t('Size'),
+      '#type' => 'fieldset',
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+      '#description' => t('Overview map size in pixels.'),
+    );
+
+    $form['size']['w'] = array(
+      '#title' => t('Width'),
+      '#type' => 'textfield',
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#default_value' => isset($defaults['size']['w']) ? $defaults['size']['w'] : 150,
+    );
+
+    $form['size']['h'] = array(
+      '#title' => t('Height'),
+      '#type' => 'textfield',
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#default_value' => isset($defaults['size']['h']) ? $defaults['size']['h'] : 100,
+    );
+
+    $form['maximized'] = array(
+      '#title' => t('Maximized'),
+      '#type' => 'radios',
+      '#description' => t('Start as maximized (visible).'),
+      '#options' => array(
+        'true' => t('Yes'),
+        'false' => t('No'),
+      ),
+      '#default_value' => isset($defaults['maximized']) ? $defaults['maximized'] : 'true',
+    );
+
+    $form['minRatio'] = array(
+      '#title' => t('Minimum ratio'),
+      '#type' => 'textfield',
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#description' => t('The ratio of the overview map resolution to the main map resolution at which to zoom farther out on the overview map.'),
+      '#default_value' => isset($defaults['minRatio']) ? $defaults['minRatio'] : 8,
+    );
+
+    $form['maxRatio'] = array(
+      '#title' => t('Maximum ratio'),
+      '#type' => 'textfield',
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#description' => t('The ratio of the overview map resolution to the main map resolution at which to zoom farther in on the overview map.'),
+      '#default_value' => isset($defaults['maxRatio']) ? $defaults['maxRatio'] : 32,
+    );
+
+    $form['mapOptions'] = array(
+      '#title' => t('Map options'),
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#description' => t("Any non-default properties to be sent to the overview map's map constructor."),
+    );
+
+    $form['mapOptions']['numZoomLevels'] = array(
+      '#title' => t('Number of zoom levels'),
+      '#type' => 'textfield',
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#description' => t('Set to 1 to disable overview map zooming.'),
+      '#default_value' => isset($defaults['mapOptions']['numZoomLevels']) ? $defaults['mapOptions']['numZoomLevels'] : 1,
+    );
+    $form['mapOptions']['zoom'] = array(
+      '#title' => t('Zoom'),
+      '#type' => 'textfield',
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#description' => t('The initial zoom level when loading the map.'),
+      '#default_value' => isset($defaults['mapOptions']['zoom']) ? $defaults['mapOptions']['zoom'] : 3,
+    );
+
     return $form;
   }
 
