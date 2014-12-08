@@ -49,6 +49,7 @@ class openlayers_layer_type_tms extends openlayers_layer_type {
         '#type' => 'select',
         '#title' => t('File Format'),
         '#options' => array(
+          'gif' => 'gif',
           'png' => 'png',
           'jpg' => 'jpg',
           'jpeg' => 'jpeg',
