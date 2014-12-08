@@ -437,7 +437,10 @@ class openlayers_views_style_data extends views_plugin_style {
   function get_group_wkt($wkt_array) {
     geophp_load();
     $geophp = geoPHP::load($wkt_array, 'wkt');
-    return $geophp->out('wkt');
+    if (!empty($geoPHP)) {
+      return $geophp->out('wkt');
+    }
+    return array();
   }
 
   /**
