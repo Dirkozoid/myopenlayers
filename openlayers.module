@@ -18,7 +18,7 @@
 /**
  * OpenLayers hosted default library.
  */
-define('OPENLAYERS_DEFAULT_LIBRARY', 'http://openlayers.org/api/2.13/OpenLayers.js');
+define('OPENLAYERS_DEFAULT_LIBRARY', '//cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js');
 
 /**
  * OpenLayers library compatible suggestion.
