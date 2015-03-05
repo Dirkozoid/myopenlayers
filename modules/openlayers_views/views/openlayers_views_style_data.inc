@@ -59,6 +59,9 @@ class openlayers_views_style_data extends views_plugin_style {
       'projection' => 'EPSG:4326',
       'default' => 'openlayers_wkt',
     );
+    $options['attributes'] = array(
+      'default' => array(),
+    );
     return $options;
   }
 
