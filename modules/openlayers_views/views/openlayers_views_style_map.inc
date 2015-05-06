@@ -51,12 +51,14 @@ class openlayers_views_style_map extends views_plugin_style {
       $this->view->query->fields = array();
     }
     $this->view->executed = TRUE;
-    $this->view->result = array();
+
     $map = openlayers_map_load($this->options['map']);
     $render = openlayers_render_map($map);
-    $this->view->result = $render || !$map->data['hide_empty_map'] ? TRUE : FALSE;
-    if ($this->view->result) {
-      $this->render = $render;
+    if ($render || !$map->data['hide_empty_map']) {
+      $this->map = $render;
+      // Map display doesn't contain the view results, layer displays do.
+      // Fill view result with a pseudo value so it is not empty.
+      $this->view->result = array(array());
     }
   }
 
