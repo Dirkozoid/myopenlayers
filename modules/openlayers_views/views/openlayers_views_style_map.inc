@@ -16,6 +16,12 @@
  */
 class openlayers_views_style_map extends views_plugin_style {
   /**
+   * @var string $map
+   *   Rendered map.
+   */
+  public $map = '';
+
+  /**
    * Set default options
    */
   function option_definition() {
@@ -69,7 +75,7 @@ class openlayers_views_style_map extends views_plugin_style {
     return theme($this->theme_functions(), array(
       'view' => $this->view,
       'options' => $this->options,
-      'map' => $this->render
+      'map' => $this->map
     ));
   }
 }
