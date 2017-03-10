@@ -202,8 +202,12 @@ function openlayers_ui_theme($existing, $type, $theme, $path) {
 function openlayers_ui_get_projection_options() {
   $options = array();
   foreach (openlayers_layers_load() as $key => $layer) {
-    foreach ($layer->getProjections() as $projection) {
-      $options[$projection->identifier] = $projection;
+    if(!empty($layer)) {
+      foreach ($layer->getProjections() as $projection) {
+        $options[$projection->identifier] = $projection;
+      }
+    } else {
+      watchdog('OpenLayers UI',"OpenLayers UI tried to load an empty Layer [@key] Projections Options Loading Skipped for this layer.",["@key" => $key],WATCHDOG_WARNING);
     }
   }
   return $options;
