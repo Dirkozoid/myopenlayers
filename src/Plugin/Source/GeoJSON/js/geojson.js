@@ -36,7 +36,7 @@ var openlayers_source_internal_geojson = {
           return [];
         }
         else {
-          return ol.loadingstrategy.all;
+          return ol.loadingstrategy.all(extent, resolution);
         }
       };
     }
