@@ -23,9 +23,11 @@ var openlayers_source_internal_geojson = {
     // compiled version of ol.
     if ( (data.opt.reloadOnZoomChange !== undefined && data.opt.reloadOnZoomChange) || (data.opt.reloadOnExtentChange !== undefined && data.opt.reloadOnExtentChange) ) {
       data.opt.strategy = function (extent, resolution) {
-        // If loading is already in process don't trigger a new load just now.
-        // If features we're loaded reset status.
-        if (this._loadingFeatures) {
+        // If loading is already in process don't trigger a new load.
+        // If features just were loaded don't trigger a new load.
+        // If features are cleaned don't trigger a new load.
+        if (this._loadingFeatures || this._cleaningFeatures || this._featuresLoaded) {
+          // If features were just loaded reset status.
           if (this._featuresLoaded) {
             this._loadingFeatures = false;
             this._featuresLoaded = false;
@@ -71,6 +73,7 @@ var openlayers_source_internal_geojson = {
       vectorSource._clearFeaturesOnLoad = false;
       vectorSource._loadingFeatures = false;
       vectorSource._featuresLoaded = false;
+      vectorSource._cleaningFeatures = false;
 
       if (data.opt.reloadOnExtentChange !== undefined) {
         vectorSource._clearFeaturesOnLoad = true;
@@ -85,6 +88,17 @@ var openlayers_source_internal_geojson = {
         data.map.getView().on('change:resolution', function() {
           if (!vectorSource._loadingFeatures) {
             vectorSource._forceReloadFeatures = true;
+          }
+        });
+      }
+      if (vectorSource._clearFeaturesOnLoad) {
+        vectorSource.on('clear', function() {
+          //vectorSource._cleaningFeatures = false;
+        });
+        vectorSource.on('change', function(e) {
+          // Cleaned.
+          if (e.target.getFeaturesCollection() == null) {
+            e.target._cleaningFeatures = false;
           }
         });
       }
@@ -159,24 +173,23 @@ var openlayers_source_internal_geojson = {
           // If the _clearFeaturesOnLoad flag is set remove the current
           // features before adding the new ones.
           if (typeof that._clearFeaturesOnLoad !== 'undefined' && that._clearFeaturesOnLoad) {
-            // Clear features in this extent. We can't use that.clear()
-            // because this causes some strange trouble afterwards. And we
-            // can't use that.forEachFeature() or
-            // that.forEachFeatureInExtent() because those functions won't
-            // work with that.removeFeature().
-            var features = that.getFeaturesInExtent(extent);
-            jQuery(features).each(function (i, f) {
-              that.removeFeature(f);
-            });
+            // Use clear to ensure the features are removed from the extent
+            // caching as well.
+            that._cleaningFeatures = true;
+            that.clear(true);
           }
 
           var format = new ol.format.GeoJSON();
           var features = format.readFeatures(data, {featureProjection: projection});
           that.addFeatures(features);
-
+        },
+        complete: function(jqXHR, textStatus) {
+          // Ensure the status of the vector is properly set - no matter if the
+          // request was successful or not.
           that._forceReloadFeatures = false;
           that._featuresLoaded = true;
         }
+
       });
     }
   }
