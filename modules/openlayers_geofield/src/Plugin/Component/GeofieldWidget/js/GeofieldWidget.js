@@ -199,7 +199,7 @@ Drupal.openlayers.pluginManager.register({
         datas;
       try {
         if (data.opt.featureLimit && data.opt.featureLimit != -1 && data.opt.featureLimit < features.length) {
-          if (confirm(Drupal.t('You can add a maximum of !limit features. Dou you want to replace the last feature by the new one?', {'!limit': data.opt.featureLimit}))) {
+          if (confirm(Drupal.t('You can add a maximum of !limit features. Do you want to replace the last feature by the new one?', {'!limit': data.opt.featureLimit}))) {
             var lastFeature = features[features.length - 2];
             vector_layer.getSource().removeFeature(lastFeature);
           } else {
